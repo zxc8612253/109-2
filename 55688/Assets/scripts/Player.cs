@@ -12,4 +12,42 @@ public class Player : MonoBehaviour
     public bool isDead = false;
     [Tooltip("這是角色的名字")]
     public string cName = "貓咪";
+    [Header("虛擬搖桿")]
+    public FixedJoystick joystick;
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    private void Move()
+    {
+        print("移動");
+
+        float h = joystick.Horizontal;
+        print("水平:" + h);
+    }
+
+    private void Attack()
+    {
+
+    }
+
+    private void Hit()
+    {
+
+    }
+
+    private void Dead()
+    {
+
+    }
+
+    private void Start()
+    {
+        
+    }
+    private void Update()
+    {
+        Move();
+    }
 }
