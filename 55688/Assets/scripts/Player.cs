@@ -18,6 +18,16 @@ public class Player : MonoBehaviour
     public Transform tra;
     [Header("動畫元素")]
     public Animator ani;
+    [Header("偵測範圍")]
+    public float rangeAttack = 2.5f;
+
+    private void OnDrawGizmos()
+    {
+        //指定圖示的顏色
+        Gizmos.color = new Color(1, 0, 0, 0.4f);
+        //繪製圖示
+        Gizmos.DrawSphere(transform.position, rangeAttack);
+    }
 
     /// <summary>
     /// 移動
@@ -34,9 +44,15 @@ public class Player : MonoBehaviour
         ani.SetFloat("垂直", v);
     }
 
-    private void Attack()
+    public void Attack()
     {
+        print("攻擊");
 
+        // 2D 物理 圓形碰撞(中心點,半徑,方向,距離,圖層)
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, rangeAttack, -transform.up, 0, 1 << 8);
+
+        // 如果 碰到的物件 標籤 為 道具 就刪除
+        if (hit.collider.tag == "道具") Destroy(hit.collider.gameObject);
     }
 
     private void Hit()
