@@ -5157,6 +5157,8 @@ MonoBehaviour:
   tra: {fileID: 1660967131}
   ani: {fileID: 1660967129}
   rangeAttack: 1.2
+  aud: {fileID: 0}
+  soundAttack: {fileID: 8300000, guid: f61b14391765f034fbf360df9a623a02, type: 3}
 --- !u!50 &1660967133
 Rigidbody2D:
   serializedVersion: 4
