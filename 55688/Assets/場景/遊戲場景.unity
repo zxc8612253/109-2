@@ -5347,8 +5347,8 @@ MonoBehaviour:
   rangeAttack: 1.2
   aud: {fileID: 1660967135}
   soundAttack: {fileID: 8300000, guid: f61b14391765f034fbf360df9a623a02, type: 3}
-  soundEat: {fileID: 0}
-  textCoin: {fileID: 0}
+  soundEat: {fileID: 8300000, guid: 4a45f0116a6859b42bd6e84d54051d61, type: 3}
+  textCoin: {fileID: 430410759}
 --- !u!50 &1660967133
 Rigidbody2D:
   serializedVersion: 4
