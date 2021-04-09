@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI; // 引用 介面API
 
 public class Player : MonoBehaviour
 {
@@ -57,7 +56,7 @@ public class Player : MonoBehaviour
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, rangeAttack, -transform.up, 0, 1 << 8);
 
         // 如果 碰到的物件 標籤 為 道具 就取得道具腳本並呼叫掉落道具方法
-        if (hit && hit.collider.tag == "道具") hit.collider.GetComponent<Item>().DropProp();
+        if (hit && hit.collider.tag == "道具") hit.collider.GetComponent<Item>()  .DropProp();
     }
 
     private void Hit()
@@ -77,5 +76,24 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
+    }
+
+    [Header("吃金條音效")]
+    public AudioClip soundEat;
+    [Header("金幣數量")]
+    public Text textCoin;
+
+    private int coin;
+
+    //觸發事件-進入:瞭個物件其中1個要勾選is Trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "金條")
+        {
+            coin++;
+            aud.PlayOneShot(soundEat);
+            Destroy(collision.gameObject);
+            textCoin.text = "金幣: " + coin;
+        }
     }
 }

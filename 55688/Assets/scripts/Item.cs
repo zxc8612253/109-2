@@ -16,6 +16,16 @@ public class Item : MonoBehaviour
         // 隨機值 = 隨機.範圍(最小值,最大值)
         float r = Random.Range(0f, 1f);
 
-        print("隨機值" + r);
+        // print("隨機值" + r);
+
+        // 如果 隨機值 <= 掉落機率
+        if(r <= percent)
+        {
+            // 生成(生成的物件,座標,角度)
+            Instantiate(prop, transform.position, transform.rotation);
+        }
+
+        // 刪除(此物件)
+        Destroy(gameObject);
     }
 }
