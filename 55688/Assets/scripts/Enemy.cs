@@ -14,17 +14,31 @@ public class Enemy : MonoBehaviour
     public float cdAttack = 3;
     [Header("攻擊力"), Range(0, 1000)]
     public float attack = 20;
+    [Header("經驗值"), Range(0, 500)]
+    public float exp = 30;
 
     private Transform player;
+    private Player _player;
 
     /// <summary>
     /// 計時器
     /// </summary>
     private float timer;
-    
+
+    [Header("血量")]
+    public float hp = 200;
+    [Header("血條系統")]
+    public HpManager hpManager;
+    [Header("角色是否死亡")]
+    public bool isDead = false;
+
+    private float hpMax;
+
     private void Start()
     {
+        hpMax = hp;   // 取得血量最大值
         player = GameObject.Find("玩家").transform;
+        _player = player.GetComponent<Player>();
     }
 
     // 繪製圖示事件 : 在Unity內顯示輔助開發
@@ -50,6 +64,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Track()
     {
+        if (isDead) return;
+        
         // 距離 等於 三維向量的距離(A點 , B點)
         float dis = Vector3.Distance(transform.position, player.position);
 
@@ -79,8 +95,33 @@ public class Enemy : MonoBehaviour
         {
             timer = 0;             // 計時器歸零
             psAttack.Play();       // 播放 攻擊特效
-            Collider2D hit = Physics2D.OverlapCircle(transform.position, rangeAttack);
+            Collider2D hit = Physics2D.OverlapCircle(transform.position, rangeAttack, 1<< 9);
             hit.GetComponent<Player>().Hit(attack);
         } 
+    }
+    
+    
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="damage">接收到的傷害值</param>
+    public void Hit(float damage)
+    {
+        hp -= damage;                            // 扣除傷害值               
+        hpManager.UpdateHpBar(hp, hpMax);        // 更新血條
+        StartCoroutine(hpManager.ShowDamage(damage));  // 啟動協同程序 (顯示傷害值())
+
+        if (hp <= 0) Dead();                           // 如果 血量 <= 0 就死亡
+    }
+
+
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    private void Dead()
+    {
+        hp = 0;
+        isDead = true;
+        Destroy(gameObject, 1.5f);
     }
 }
