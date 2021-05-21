@@ -8,6 +8,7 @@ TagManager:
   - "\u91D1\u689D"
   - "\u77F3\u982D"
   - "\u6575\u4EBA"
+  - NPC
   layers:
   - Default
   - TransparentFX

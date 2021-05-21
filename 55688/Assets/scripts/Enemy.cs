@@ -120,8 +120,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        if (isDead) return;                            // 如果死亡就退出
         hp = 0;
         isDead = true;
         Destroy(gameObject, 1.5f);
+        _player.Exp(exp);                              // 將經驗值傳給玩家
     }
 }
